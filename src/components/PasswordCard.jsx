@@ -8,13 +8,6 @@ const PasswordCard = ({ password }) => {
     navigate(`/password/${password.entryId}`);
   };
 
-  const handleCopy = () => {
-    navigator.clipboard
-      .writeText(password.password)
-      .then(() => alert("Пароль скопійовано!"))
-      .catch(() => alert("Помилка копіювання"));
-  };
-
   return (
    <div className={styles.card} onClick={handleClick} style={{ cursor: 'pointer' }}>
       <h3>{password.serviceName}</h3>

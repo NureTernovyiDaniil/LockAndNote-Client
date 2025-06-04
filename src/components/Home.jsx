@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
 import usePasswordApi from "../Hooks/usePasswordApi";
 import AddPasswordForm from "./AddPasswordForm";
-import styles from "../styles/Home.module.css";
+import styles from "../Styles/Home.module.css";
 import PasswordsList from "./PasswordsList";
 
 const Home = () => {
@@ -57,10 +57,10 @@ const Home = () => {
       </button>
 
       {showAddForm && (
-        <AddPasswordForm
-          api={api}
-          onClose={handleAddFormClose}
-          onAdded={handlePasswordAdded}
+        <AddPasswordForm 
+          api={api} 
+          onClose={handleAddFormClose} 
+          onAdd={handlePasswordAdded}
         />
       )}
     </div>

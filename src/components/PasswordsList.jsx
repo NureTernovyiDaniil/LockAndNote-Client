@@ -1,4 +1,3 @@
-import React from "react";
 import PasswordCard from "./PasswordCard";
 
 const PasswordsList = ({ passwords }) => {

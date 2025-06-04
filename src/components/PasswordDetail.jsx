@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import usePasswordApi from "../Hooks/usePasswordApi";
-import styles from "../styles/PasswordDetail.module.css";
+import styles from "../Styles/PasswordDetail.module.css";
 
 const PasswordDetail = () => {
   const { id } = useParams();

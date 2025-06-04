@@ -1,4 +1,4 @@
-import styles from "../styles/PasswordCard.module.css";
+import styles from "../Styles/PasswordCard.module.css";
 import { useNavigate } from "react-router";
 
 const PasswordCard = ({ password }) => {

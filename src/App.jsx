@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './Contexts/AuthContext';
-import Login from './components/login';
+import Login from './components/Login' 
 import Register from './components/Register';
 import Home from './components/Home';
 import 'bootstrap/dist/css/bootstrap.min.css'

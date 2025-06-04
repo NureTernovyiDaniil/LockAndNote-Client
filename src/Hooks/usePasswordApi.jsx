@@ -1,10 +1,16 @@
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthProvider';
-import createPasswordApi from '../api/passwordApi';
+import React, { useContext, useMemo } from 'react';
+import { AuthContext } from '../Contexts/AuthContext';
+import createPasswordApi from '../Services/PasswordService';
 
 const usePasswordApi = () => {
-  const { token } = useContext(AuthContext);
-  return createPasswordApi(token);
+  const { accessToken } = useContext(AuthContext);
+
+  const api = useMemo(() => {
+    if (!accessToken) return null;
+    return createPasswordApi(accessToken);
+  }, [accessToken]);
+
+  return api;
 };
 
 export default usePasswordApi;

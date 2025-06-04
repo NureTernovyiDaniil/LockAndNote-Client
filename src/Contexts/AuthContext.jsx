@@ -7,10 +7,10 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState("");
   const [tokenValid, setTokenValid] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedAccess = localStorage.getItem("lockAndNoteAccessToken");
-    console.log("Loaded token from localStorage:", storedAccess);
     if (storedAccess && isTokenValid(storedAccess)) {
       setAccessToken(storedAccess);
       setTokenValid(true);
@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
       setAccessToken("");
       setTokenValid(false);
     }
+    setLoading(false);
   }, []);
 
   const isTokenValid = (token) => {
@@ -31,6 +32,9 @@ export const AuthProvider = ({ children }) => {
 
       const now = Date.now();
       const exp = decoded.exp * 1000;
+      console.log(exp);
+      console.log(now);
+      console.log(now < exp);
 
       return now < exp;
     } catch (err) {
@@ -42,7 +46,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const data = await AuthService.login(email, password);
-      setAccessToken(data.accessToken);
+      setAccessToken(data.token);
       setTokenValid(isTokenValid(data.token));
       localStorage.setItem("lockAndNoteAccessToken", data.token);
       return true;
@@ -75,7 +79,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ accessToken, tokenValid, login, register, logout }}
+      value={{ accessToken, tokenValid, loading, login, register, logout }}
     >
       {children}
     </AuthContext.Provider>

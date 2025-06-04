@@ -1,15 +1,20 @@
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './Contexts/AuthContext';
-import Login from './components/Login' 
+import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/Home';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import PasswordDetail from './components/PasswordDetail';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PrivateRoute = ({ children }) => {
-  const { tokenValid } = useContext(AuthContext);
-  console.log(tokenValid);
-  return tokenValid ? children : <Navigate to="/login" />;
+  const { tokenValid, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <div>Завантаження...</div>;
+  }
+
+  return tokenValid ? children : <Navigate to="/login" replace />;
 };
 
 const App = () => {
@@ -22,6 +27,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Home />
+              </PrivateRoute>
+            }
+          />
+           <Route
+            path="/password/:id"
+            element={
+              <PrivateRoute>
+                <PasswordDetail />
               </PrivateRoute>
             }
           />

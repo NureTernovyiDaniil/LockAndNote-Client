@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Container, Card, Alert } from "react-bootstrap";
+import styles from "../Styles/AuthStyles.module.css";
 
 const Register = () => {
   const { register } = useContext(AuthContext);
@@ -28,61 +28,70 @@ const Register = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center min-vh-100">
-      <Card style={{ width: "100%", maxWidth: "400px" }} className="p-4 shadow">
-        <h3 className="text-center mb-4">Реєстрація</h3>
-        {error && <Alert variant="danger">{error}</Alert>}
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Ім’я користувача</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Введіть логін"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </Form.Group>
+    <div className={styles.wrapper}>
+      <form className={styles.card} onSubmit={handleSubmit}>
+        <h3 className={styles.title}>Реєстрація</h3>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Пароль</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Введіть пароль"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </Form.Group>
+        {error && (
+          <div
+            style={{ color: "red", marginBottom: "1rem", textAlign: "center" }}
+          >
+            {error}
+          </div>
+        )}
 
-          <Form.Group className="mb-4">
-            <Form.Label>Підтвердити пароль</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Ще раз"
-              value={confirm}
-              onChange={(e) => setConfirm(e.target.value)}
-              required
-            />
-          </Form.Group>
+        <label className={styles.label}>Пошта користувача</label>
+        <input
+          type="text"
+          className={styles.input}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Введіть пошту"
+          required
+        />
 
-          <Form.Group className="mb-3">
-            <Form.Label>Кодова фраза для шифрування</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Введіть фразу"
-              value={passwordAccessHash}
-              onChange={(e) => setPasswordAccessHash(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Button variant="success" type="submit" className="w-100">
-            Зареєструватися
-          </Button>
-        </Form>
-      </Card>
-    </Container>
+        <label className={styles.label}>Пароль</label>
+        <input
+          type="password"
+          className={styles.input}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Введіть пароль"
+          required
+        />
+
+        <label className={styles.label}>Підтвердження пароля</label>
+        <input
+          type="password"
+          className={styles.input}
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          placeholder="Повторіть пароль"
+          required
+        />
+        <label className={styles.label}>Ключ доступу</label>
+        <input
+          type="text"
+          className={styles.input}
+          value={passwordAccessHash}
+          onChange={(e) => setPasswordAccessHash(e.target.value)}
+          placeholder="Введіть ключ доступу"
+        />
+        <button
+          type="submit"
+          className={styles.input}
+          style={{
+            backgroundColor: "#667eea",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          Зареєструватися
+        </button>
+      </form>
+    </div>
   );
-}
+};
 
 export default Register;

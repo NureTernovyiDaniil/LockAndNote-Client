@@ -32,9 +32,6 @@ export const AuthProvider = ({ children }) => {
 
       const now = Date.now();
       const exp = decoded.exp * 1000;
-      console.log(exp);
-      console.log(now);
-      console.log(now < exp);
 
       return now < exp;
     } catch (err) {

@@ -49,3 +49,18 @@
   background: linear-gradient(135deg, #388e3c, #66bb6a);
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
 }
+
+.searchInput {
+  width: 100%;
+  padding: 10px 14px;
+  margin: 16px 0;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.searchInput:focus {
+  border-color: #007bff;
+}

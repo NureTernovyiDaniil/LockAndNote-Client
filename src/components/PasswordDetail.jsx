@@ -21,6 +21,17 @@ const PasswordDetail = () => {
     navigate("/");
   };
 
+  const handleUpdate = () => {
+    navigate(`/password/update/${id}`);
+  };
+
+  const handleDelete = () => {
+    if (confirm("Ви підтверджуєте видалення?")) {
+      api.deletePassword(id);
+      navigate("/");
+    }
+  };
+
   useEffect(() => {
     const fetchPassword = async () => {
       try {
@@ -42,11 +53,32 @@ const PasswordDetail = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Деталі пароля</h2>
-      
-      <button className={styles.backButton} onClick={handleBack}>
-        ← Назад до списку паролів
-      </button>
-
+      <div className={styles.buttonGroup}>
+        <button
+          className={`${styles.button} ${styles.backButton}`}
+          onClick={handleBack}
+        >
+          ← Назад
+        </button>
+        <button
+          className={`${styles.button} ${styles.updateButton}`}
+          onClick={handleUpdate}
+        >
+          Оновити
+        </button>
+        <button
+          className={`${styles.button} ${styles.deleteButton}`}
+          onClick={handleDelete}
+        >
+          Видалити
+        </button>
+        <button
+          className={`${styles.button} ${styles.copyButton}`}
+          onClick={handleCopy}
+        >
+          Скопіювати пароль
+        </button>
+      </div>
       <div className={styles.field}>
         <span className={styles.label}>Сервіс:</span>
         <span className={styles.value}>{password.serviceName}</span>
@@ -58,7 +90,6 @@ const PasswordDetail = () => {
       <div className={styles.field}>
         <span className={styles.label}>Пароль:</span>
         <span className={styles.value}>{password.password}</span>
-        <button className={styles.copyButton} onClick={handleCopy}>Копіювати</button>
       </div>
       <div className={styles.field}>
         <span className={styles.label}>Нотатки:</span>

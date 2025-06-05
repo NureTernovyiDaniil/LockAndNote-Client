@@ -1,43 +1,39 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
 import usePasswordApi from "../Hooks/usePasswordApi";
-import AddPasswordForm from "./AddPasswordForm";
 import styles from "../Styles/Home.module.css";
 import PasswordsList from "./PasswordsList";
+import { useNavigate } from "react-router";
 
 const Home = () => {
   const { logout } = useContext(AuthContext);
   const api = usePasswordApi();
-
+  const navigate = useNavigate();
   const [passwords, setPasswords] = useState([]);
-  const [showAddForm, setShowAddForm] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (!api) return;
     const fetchPasswords = async () => {
       try {
-        const data = await api.getAllPasswords();
-        setPasswords(data);
-        console.log(data)
+        if (searchQuery === "") {
+          const data = await api.getAllPasswords();
+          setPasswords(data);
+        } else {
+          console.log(searchQuery);
+          const data = await api.searchPasswords(searchQuery);
+          setPasswords(data);
+        }
       } catch (err) {
         console.error("Failed to load passwords", err);
       }
     };
 
     fetchPasswords();
-  }, [api]);
+  }, [api, searchQuery]);
 
   const handleAddClick = () => {
-    setShowAddForm(true);
-  };
-
-  const handleAddFormClose = () => {
-    setShowAddForm(false);
-  };
-
-  const handlePasswordAdded = (newPassword) => {
-    setPasswords((prev) => [...prev, newPassword]);
-    setShowAddForm(false);
+    navigate("password/add");
   };
 
   return (
@@ -45,9 +41,6 @@ const Home = () => {
       <div className={styles.welcome}>
         <strong>Паролі</strong>
       </div>
-
-      <PasswordsList passwords={passwords}/>
-
       <button className={styles.addnewbutton} onClick={handleAddClick}>
         Додати пароль
       </button>
@@ -55,14 +48,14 @@ const Home = () => {
       <button className={styles.logoutButton} onClick={logout}>
         Вийти
       </button>
-
-      {showAddForm && (
-        <AddPasswordForm 
-          api={api} 
-          onClose={handleAddFormClose} 
-          onAdd={handlePasswordAdded}
-        />
-      )}
+      <input
+        type="text"
+        placeholder="Пошук..."
+        className={styles.searchInput}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      <PasswordsList passwords={passwords} />
     </div>
   );
 };

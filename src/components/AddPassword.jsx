@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import usePasswordApi from "../Hooks/usePasswordApi";
-import styles from "../Styles/PasswordStyles.module.css";
+import { useNavigate } from "react-router";
+import styles from "../Styles/AddPassword.module.css"
 
-const AddPasswordForm = ({ token }) => {
-  const api = usePasswordApi(token);
+const AddPassword = () => {
+  const api = usePasswordApi();
   const [form, setForm] = useState({
     serviceName: "",
     login: "",
     rawPassword: "",
     notes: ""
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,7 +22,7 @@ const AddPasswordForm = ({ token }) => {
     e.preventDefault();
     await api.addPassword(form);
     alert("Пароль додано");
-    setForm({ serviceName: "", login: "", rawPassword: "", notes: "" });
+    navigate("/");
   };
 
   return (
@@ -68,4 +71,4 @@ const AddPasswordForm = ({ token }) => {
   );
 };
 
-export default AddPasswordForm;
+export default AddPassword;

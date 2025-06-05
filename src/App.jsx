@@ -1,11 +1,18 @@
-import React, { useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, AuthContext } from './Contexts/AuthContext';
-import Login from './components/Login';
-import Register from './components/Register';
-import Home from './components/Home';
-import PasswordDetail from './components/PasswordDetail';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useContext } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, AuthContext } from "./Contexts/AuthContext";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Home from "./components/Home";
+import PasswordDetail from "./components/PasswordDetail";
+import UpdatePassword from "./components/UpdatePassword";
+import AddPasswordForm from "./components/AddPassword";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const PrivateRoute = ({ children }) => {
   const { tokenValid, loading } = useContext(AuthContext);
@@ -30,11 +37,27 @@ const App = () => {
               </PrivateRoute>
             }
           />
-           <Route
+          <Route
             path="/password/:id"
             element={
               <PrivateRoute>
                 <PasswordDetail />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/password/update/:id"
+            element={
+              <PrivateRoute>
+                <UpdatePassword />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/password/add"
+            element={
+              <PrivateRoute>
+                <AddPasswordForm />
               </PrivateRoute>
             }
           />

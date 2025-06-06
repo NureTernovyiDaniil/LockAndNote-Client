@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.welcome}>
-        <strong>Паролі</strong>
+        <strong>Паролі ТЕСТ</strong>
       </div>
       <button className={styles.addnewbutton} onClick={handleAddClick}>
         Додати пароль
